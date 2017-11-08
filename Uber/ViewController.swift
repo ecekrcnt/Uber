@@ -24,8 +24,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-    
     }
+    
     @IBAction func btn_sign(_ sender: Any) {
         if (txtField_email.text == "" || txtField_password.text == "") {
             displayAlert(title: "Missing Information", message: "You must provide both a email and password")
@@ -37,6 +37,7 @@ class ViewController: UIViewController {
                         if (error != nil) {
                             self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
                         } else {
+                            self.performSegue(withIdentifier: "riderSegue", sender: nil)
                             print("Sign Up Success")
                         }
                     })
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
                             self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
                         } else {
                             print("Log In Success")
+                            self.performSegue(withIdentifier: "riderSegue", sender: nil)
                         }
                     })
                 }
