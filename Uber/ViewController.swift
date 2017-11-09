@@ -37,8 +37,20 @@ class ViewController: UIViewController {
                         if (error != nil) {
                             self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
                         } else {
-                            self.performSegue(withIdentifier: "riderSegue", sender: nil)
-                            print("Sign Up Success")
+                            if self.switch_riderDriver.isOn {
+                                //DRIVER
+                                let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                                req?.displayName = "Driver"
+                                req?.commitChanges(completion: nil)
+                                self.performSegue(withIdentifier: "driverSegue", sender: nil)
+                            } else {
+                                //RIDER
+                                let req = Auth.auth().currentUser?.createProfileChangeRequest()
+                                req?.displayName = "Rider"
+                                req?.commitChanges(completion: nil)
+                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                                print("Sign Up Success")
+                            }
                         }
                     })
                 } else {
@@ -47,8 +59,15 @@ class ViewController: UIViewController {
                         if (error != nil) {
                             self.displayAlert(title: "Error", message: (error?.localizedDescription)!)
                         } else {
-                            print("Log In Success")
-                            self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                            if user?.displayName == "Driver" {
+                                //DRIVER
+                                print("driver")
+                                self.performSegue(withIdentifier: "driverSegue", sender: nil)
+                            } else {
+                                //RIDER
+                                print("Log In Success")
+                                self.performSegue(withIdentifier: "riderSegue", sender: nil)
+                            }
                         }
                     })
                 }
