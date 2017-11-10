@@ -42,7 +42,7 @@ class AcceptRequestViewController: UIViewController {
         CLGeocoder().reverseGeocodeLocation(requestCLLocation) { (placemarks, error) in
             if let placemarks = placemarks {
                 if placemarks.count > 0 {
-                    let placeMark = MKPlacemark(placemark: placemarks[0])
+                    let placeMark = MKPlacemark(placemark: placemarks[0]) //belirtilen koordinatla ilişkili ülke, eyalet, şehir ve sokak adresi gibi bilgileri içerir.
                     let mapItem = MKMapItem(placemark: placeMark)
                     mapItem.name = self.requestEmail
                     let options = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]

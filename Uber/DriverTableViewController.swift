@@ -13,7 +13,7 @@ import MapKit
 
 class DriverTableViewController: UITableViewController, CLLocationManagerDelegate {
     
-    var rideRequest : [DataSnapshot] = []
+    var rideRequest : [DataSnapshot] = [] //Veritabanı verilerini her okunduğunda, veriler bir DataSnapshot olarak alınır.
     var locationManager = CLLocationManager()
     var driverLocation = CLLocationCoordinate2D()
 

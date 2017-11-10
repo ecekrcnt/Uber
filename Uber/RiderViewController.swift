@@ -24,9 +24,9 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest //konum verilerinin doğruluğu.
+        locationManager.requestWhenInUseAuthorization() //uygulama ön planda iken konum servislerini kullanma izinini istemektedir.
+        locationManager.startUpdatingLocation() //kullanıcının konumunu güncelleştirmelerin oluşturulmasını başlatır.
         
         if let email = Auth.auth().currentUser?.email {
             Database.database().reference().child("RideRequest").queryOrdered(byChild: "email").queryEqual(toValue: email).observe(.childAdded, with: { (snapshot) in
@@ -41,10 +41,10 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
         if let coord = manager.location?.coordinate {
             let center = CLLocationCoordinate2D(latitude: coord.latitude, longitude: coord.longitude)
             userLocation = center
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)) //Belirli bir enlem ve boylam etrafında merkezlenmiş dikdörtgen bir coğrafi bölge.
             map_rider.setRegion(region, animated: true)
-            map_rider.removeAnnotations(map_rider.annotations)
-            let annotation = MKPointAnnotation()
+            map_rider.removeAnnotations(map_rider.annotations) //Ek açıklama görünümünü kaldırır ve daha sonra tekrar kullanmak üzere sıraya koyar.
+            let annotation = MKPointAnnotation() //Açıklama nesnesi
             annotation.coordinate = center
             annotation.title = "Your Location"
             map_rider.addAnnotation(annotation)
@@ -57,7 +57,6 @@ class RiderViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func btn_callAnUber(_ sender: Any) {
-        
         if let email = Auth.auth().currentUser?.email {
             if uberHasBeenCalled {
                 uberHasBeenCalled = false
