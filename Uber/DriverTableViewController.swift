@@ -26,8 +26,14 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
         locationManager.startUpdatingLocation()
         
         Database.database().reference().child("RideRequest").observe(.childAdded) { (snapshot) in
-            self.rideRequest.append(snapshot)
-            self.tableView.reloadData()
+            if let rideRequestDictionary = snapshot.value as? [String:AnyObject] {
+                if let driverLat = rideRequestDictionary["driverLat"] as? Double {
+                    
+                } else {
+                    self.rideRequest.append(snapshot)
+                    self.tableView.reloadData()
+                }
+            }
         }
         
         Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { (timer) in
@@ -54,6 +60,7 @@ class DriverTableViewController: UITableViewController, CLLocationManagerDelegat
         let cell = tableView.dequeueReusableCell(withIdentifier: "rideRequestCell", for: indexPath)
         
         let snapshot = rideRequest[indexPath.row]
+        
         if let rideRequestDictionary = snapshot.value as? [String: AnyObject] {
             if let email = rideRequestDictionary["email"] as? String {
                 if let lat = rideRequestDictionary["lat"] as? Double {
